@@ -11,8 +11,11 @@
     <string name="lastDateExecution">-</string>
     <string name="startService">Start Service</string>
     <string name="stopService">Stop Service</string>
-    <string name="toast-completed">DOfM On-Demand Execution COMPLETED</string>
+    <string name="toast_completed">DOfM On-Demand Execution COMPLETED</string>
     <string name="toast_started">DOfM Watcher has been STARTED</string>
     <string name="toast_stopped">DOfM Watcher has been STOPPED</string>
+    <string name="title_activity_import_export">ImportExportActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_imexport">Import/Export</string>
 
 </resources>

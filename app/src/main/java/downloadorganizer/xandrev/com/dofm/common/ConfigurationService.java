@@ -83,8 +83,23 @@ public class ConfigurationService {
 
     }
 
+    public Map<String, ?> getAll(){
+        return prefs.getAll();
+    }
+
 
     public boolean isEmpty() {
         return prefs == null || prefs.getAll().size() == 0;
+    }
+
+    public void putProperty(String value, String value1, String value2) {
+        SharedPreferences.Editor editor = prefs.edit();
+        if(value2 != null && value2.contains("String")) {
+            editor.putString(value, value1);
+        }
+        else if(value2.contains("Boolean")){
+            editor.putBoolean(value, Boolean.parseBoolean(value1));
+        }
+        editor.commit();
     }
 }

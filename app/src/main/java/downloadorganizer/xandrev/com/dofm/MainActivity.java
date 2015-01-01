@@ -122,6 +122,9 @@ public class MainActivity extends ActionBarActivity {
         else if(id == R.id.action_service){
             manageBackgroundService(item);
         }
+        else if(id == R.id.action_imexport){
+            startActivityForResult(new Intent(this,ImportExportActivity.class),0);
+        }
 
         return super.onOptionsItemSelected(item);
     }
