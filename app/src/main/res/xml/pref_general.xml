@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:title="Initial Folder"
+        android:key="general.initial_folder"
+        android:summary="Initial folder which will be watched by the application"
+        android:defaultValue="/storage/external_storage/sda1/Videos"
+        />
+    <!-- android:defaultValue="/storage/sdcard0/Download" -->
+    <EditTextPreference
+        android:title="Final Folder"
+        android:key="general.final_folder"
+        android:summary="Root folder under we get all our categorized items"
+        android:defaultValue="/storage/external_storage/sda1/"
+        />
+        <!-- android:defaultValue="/storage/sdcard0/" -->
+
+
+
+    <ListPreference
+        android:title="Language"
+        android:key="general.language"
+        android:summary="Language of the application"
+        android:entries="@array/listentries"
+        android:entryValues="@array/listvalues" />
+        />
+</PreferenceScreen>

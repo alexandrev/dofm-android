@@ -1,0 +1,23 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:title="Root Folder"
+        android:key="files.root_folder"
+        android:summary="Category folder name which will contain all the items grouped by this category"
+        android:defaultValue="Otros"
+        />
+    <EditTextPreference
+        android:title="Priority"
+        android:key="files.priority"
+        android:summary="Priority of this organizer over the rest. The higher the most prioritized"
+        android:numeric="integer"
+        android:defaultValue="20"
+        />
+    <EditTextPreference
+        android:title="Extensions"
+        android:key="files.extensions"
+        android:summary="File extensions allowed to run inside the organizer"
+        />
+
+
+</PreferenceScreen>

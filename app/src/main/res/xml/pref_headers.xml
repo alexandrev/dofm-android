@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="downloadorganizer.xandrev.com.dofm.SettingsActivity$GeneralPreferenceFragment"
+        android:title="@string/pref_header_general" />
+    <header
+        android:fragment="downloadorganizer.xandrev.com.dofm.SettingsActivity$MoviesPreferenceFragment"
+        android:title="@string/pref_header_movies" />
+    <header
+        android:fragment="downloadorganizer.xandrev.com.dofm.SettingsActivity$TVShowsPreferenceFragment"
+        android:title="@string/pref_header_tvshows" />
+    <header
+        android:fragment="downloadorganizer.xandrev.com.dofm.SettingsActivity$FilesPreferenceFragment"
+        android:title="@string/pref_header_files" />
+
+
+
+</preference-headers>

@@ -1,0 +1,33 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:title="Root Folder"
+        android:key="tvshows.root_folder"
+        android:summary="Category folder name which will contain all the items grouped by this category"
+        android:defaultValue="Series"
+        />
+    <EditTextPreference
+        android:title="Filtering Pattern"
+        android:key="tvshows.pattern"
+        android:summary="Pattern that helps to categorize the items inside the category"
+        android:defaultValue="(.*)\\s*[\\.\\-]\\s*([sS]([0-9]?[0-9])[eE]?([0-9]?[0-9])|([0-9]?[0-9])x([0-9]?[0-9])|([0-9]?[0-9])of([0-9]?[0-9])|[0-9]{3,4}\\.).*"
+        />
+    <EditTextPreference
+        android:title="Priority"
+        android:key="tvshows.priority"
+        android:summary="Priority of this organizer over the rest. The higher the most prioritized"
+        android:numeric="integer"
+        android:defaultValue="100"
+        />
+    <CheckBoxPreference
+        android:title="Folder Season"
+        android:key="tvshows.folder_season"
+        android:defaultValue="true"
+        android:summary="Check to create a folder for each season inside a shows folder"
+        />
+    <EditTextPreference
+        android:title="Extensions"
+        android:key="tvshows.extensions"
+        android:summary="File extensions allowed to run inside the organizer"
+        android:defaultValue="avi,mp4,mkv"
+        />
+</PreferenceScreen>

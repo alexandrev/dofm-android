@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:title="Root Folder"
+        android:key="movies.root_folder"
+        android:summary="Category folder name which will contain all the items grouped by this category"
+        android:defaultValue="Peliculas"
+        />
+    <EditTextPreference
+        android:title="Priority"
+        android:key="movies.priority"
+        android:summary="Priority of this organizer over the rest. The higher the most prioritized"
+        android:numeric="integer"
+        android:defaultValue="50"
+        />
+    <CheckBoxPreference
+        android:title="Folder Movie"
+        android:key="movies.own_folder"
+        android:defaultValue="true"
+        android:summary="Check if you want a separated folder for each item inside the category"
+        />
+    <EditTextPreference
+        android:title="Extensions"
+        android:key="movies.extensions"
+        android:summary="File extensions allowed to run inside the organizer"
+        android:defaultValue="avi,mp4,mkv"
+        />
+
+</PreferenceScreen>
