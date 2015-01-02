@@ -3,19 +3,12 @@ package downloadorganizer.xandrev.com.dofm.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.os.Environment;
 import android.os.FileObserver;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.common.io.Files;
-
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.UUID;
 
 import downloadorganizer.xandrev.com.dofm.R;
 import downloadorganizer.xandrev.com.dofm.common.ConfigurationService;
@@ -26,8 +19,7 @@ import downloadorganizer.xandrev.com.dofm.common.Constants;
  */
 public class OrganizeService extends Service {
 
-    private static final String DEFAULT_NAME = "OrganizeService";
-    private static final String TAG = "DEBUG";
+    private static final String LOG_TAG = "OrganizeService";
 
     private FileObserver observer;
     private ConfigurationService cfg;
@@ -49,46 +41,46 @@ public class OrganizeService extends Service {
         cfg = ConfigurationService.getInstance(context);
         cfg.reloadConfiguration(context);
         service = ExecutorService.getInstance();
-        Log.d(TAG, "onCreate");
+        Log.d(LOG_TAG, "onCreate");
         String initialFolder = cfg.getProperty(Constants.INITIAL_FOLDER);
-        Log.d(TAG, "Initial folder detected:"+initialFolder);
+        Log.d(LOG_TAG, "Initial folder detected:"+initialFolder);
         if(initialFolder == null ||initialFolder.isEmpty()){
             initialFolder = Constants.INITIAL_FOLDER;
         }
-        Log.d(TAG, "Final Initial folder detected:"+initialFolder);
+        Log.d(LOG_TAG, "Final Initial folder detected:"+initialFolder);
         final File fileInitFolder = new File(initialFolder);
-        Log.d(TAG,"Final: "+fileInitFolder.getAbsolutePath());
-        Log.d(TAG, "Initial Folder existed:" + fileInitFolder.exists());
+        Log.d(LOG_TAG,"Final: "+fileInitFolder.getAbsolutePath());
+        Log.d(LOG_TAG, "Initial Folder existed:" + fileInitFolder.exists());
 
         observer = new FileObserver(fileInitFolder.getAbsolutePath()) {
             @Override
 
             public void onEvent(int event, String path) {
                 if(event == FileObserver.CREATE){
-                    Log.d(TAG,"Created event has been fired from file:"+path);
+                    Log.d(LOG_TAG,"Created event has been fired from file:"+path);
                     File fTmp = new File(fileInitFolder.getAbsolutePath()+File.separator+path);
-                    Log.d(TAG,"File: "+fTmp.getAbsolutePath());
-                    Log.d(TAG,"Starting organization from:"+path);
+                    Log.d(LOG_TAG,"File: "+fTmp.getAbsolutePath());
+                    Log.d(LOG_TAG,"Starting organization from:"+path);
                     service.organizeFile(fTmp);
-                    Log.d(TAG,"Finished organization from:"+path);
+                    Log.d(LOG_TAG,"Finished organization from:"+path);
                 }
             }
         };
         observer.startWatching();
-        Log.d(TAG,"Started Watching");
+        Log.d(LOG_TAG,"Started Watching");
     }
 
     @Override
     public void onStart(Intent intent, int startId) {
         Toast.makeText(this, R.string.toast_started, Toast.LENGTH_LONG).show();
-        Log.d(TAG, "onStart");
+        Log.d(LOG_TAG, "onStart");
     }
 
     @Override
     public void onDestroy() {
         observer.stopWatching();
         Toast.makeText(this, R.string.toast_stopped, Toast.LENGTH_LONG).show();
-        Log.d(TAG, "onDestroy");
+        Log.d(LOG_TAG, "onDestroy");
     }
 
 

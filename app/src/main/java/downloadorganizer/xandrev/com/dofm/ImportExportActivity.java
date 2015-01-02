@@ -11,7 +11,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +26,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,7 +40,7 @@ import downloadorganizer.xandrev.com.dofm.common.ConfigurationService;
 public class ImportExportActivity extends ActionBarActivity {
 
     private static final int FILE_SELECT_CODE = 0;
-    private static final String TAG = "DEBUG";
+    private static final String LOG_TAG = "ImportExportActivity";
     private ConfigurationService config;
 
     @Override
@@ -76,7 +74,7 @@ public class ImportExportActivity extends ActionBarActivity {
 
     public void exportConfig(final View view){
         File fTmp = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        Log.d("DEBUG", "File folder:"+fTmp.getAbsolutePath());
+        Log.d(LOG_TAG, "File folder:"+fTmp.getAbsolutePath());
 
         if(fTmp != null){
             if(!fTmp.exists()){
@@ -84,13 +82,13 @@ public class ImportExportActivity extends ActionBarActivity {
             }
             long tTime = new Date().getTime();
             String newConfigFile = fTmp.getAbsolutePath() + File.separator + "config." + tTime + ".properties";
-            Log.d("DEBUG", "Final exporting filename:"+newConfigFile);
+            Log.d(LOG_TAG, "Final exporting filename:"+newConfigFile);
             File fConfig = new File(newConfigFile);
             if(!fConfig.exists()){
-                Log.d("DEBUG", "File not exists");
+                Log.d(LOG_TAG, "File not exists");
                 try {
                     fConfig.createNewFile();
-                    Log.d("DEBUG", "File created");
+                    Log.d(LOG_TAG, "File created");
                     FileWriter fWriter = new FileWriter(newConfigFile);
                     Map<String, ?> propertyValues = config.getAll();
                     Iterator<String> itKeys = propertyValues.keySet().iterator();
@@ -99,9 +97,10 @@ public class ImportExportActivity extends ActionBarActivity {
                         Object valueObj = propertyValues.get(key);
                         String value = valueObj.toString();
                         fWriter.write(key+":"+value+":"+valueObj.getClass().toString()+"\n");
-                        Log.d("DEBUG", "Writing: "+key+":"+value);
+                        Log.d(LOG_TAG, "Writing: "+key+":"+value);
                     }
                     fWriter.close();
+                    Toast.makeText(this,getString(R.string.sucessfully_exported)+fConfig.getAbsolutePath(),Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -117,12 +116,12 @@ public class ImportExportActivity extends ActionBarActivity {
                 if (resultCode == RESULT_OK) {
                     // Get the Uri of the selected file
                     Uri uri = data.getData();
-                    Log.d(TAG, "File Uri: " + uri.toString());
+                    Log.d(LOG_TAG, "File Uri: " + uri.toString());
                     // Get the path
                     String path = null;
                     try {
                         path = getPath(this, uri);
-                        Log.d(TAG, "File Path: " + path);
+                        Log.d(LOG_TAG, "File Path: " + path);
                         File file = new File(path);
                         importConfig(file);
                     } catch (URISyntaxException e) {
@@ -151,6 +150,7 @@ public class ImportExportActivity extends ActionBarActivity {
                         config.putProperty(values[0],values[1],values[2]);
                     }
                 }
+                Toast.makeText(this,getString(R.string.sucessfully_imported)+file.getAbsolutePath(),Toast.LENGTH_LONG).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {

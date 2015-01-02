@@ -17,5 +17,7 @@
     <string name="title_activity_import_export">ImportExportActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_imexport">Import/Export</string>
+    <string name="sucessfully_imported">"Configuration successfully imported from: "</string>
+    <string name="sucessfully_exported">"Configuration successfully exported at: "</string>
 
 </resources>

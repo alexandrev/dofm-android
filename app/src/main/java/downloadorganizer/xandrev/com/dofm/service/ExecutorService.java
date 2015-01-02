@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import downloadorganizer.xandrev.com.dofm.common.ConfigurationService;
 import downloadorganizer.xandrev.com.dofm.common.Constants;
@@ -24,6 +23,8 @@ import downloadorganizer.xandrev.com.dofm.organizers.service.OrganizerManager;
 
 
 public class ExecutorService {
+
+    private static final String LOG_TAG = "ExecutorService";
 
     private static ExecutorService instance;
     private static final Object LOCK = new Object();
@@ -71,22 +72,22 @@ public class ExecutorService {
 
     public void applyExistentFiles(String initialDirectory) {
         if (!isRunning) {
-            Log.d("DEBUG","Initial folder detected: " +initialDirectory);
+            Log.d(LOG_TAG,"Initial folder detected: " +initialDirectory);
             isRunning = true;
             File file = new File(initialDirectory);
-            Log.d("DEBUG","Starting to apply the organization to the folder: " + file.getAbsolutePath());
+            Log.d(LOG_TAG,"Starting to apply the organization to the folder: " + file.getAbsolutePath());
             applyOrganizers(file);
-            Log.d("DEBUG","Finished the organization to the selected folder");
+            Log.d(LOG_TAG,"Finished the organization to the selected folder");
             isRunning = false;
         }
     }
 
     private void applyOrganizers(File initialFolder) {
         ArrayList<String> list = new ArrayList<String>();
-        Log.d("DEBUG","Organizer list size: "+organizerList.size());
+        Log.d(LOG_TAG,"Organizer list size: "+organizerList.size());
         for (Organizer org : organizerList) {
-            Log.i("INFO","Organizer: " + org.getClass().toString());
-            Log.d("DEBUG","Organizer Extension List: "+org.getExtension().size());
+            Log.d(LOG_TAG,"Organizer: " + org.getClass().toString());
+            Log.d(LOG_TAG,"Organizer Extension List: "+org.getExtension().size());
             Collection<File> fileList = org.getFiles(initialFolder);
             if (fileList != null) {
                 Log.d("INFO","File List: " + fileList);
@@ -104,39 +105,39 @@ public class ExecutorService {
     }
 
     public void organizeFile(File fd, String folder) {
-        Log.i("INFO", "Folder: " + folder);
-        Log.i("INFO","Root Folder: " + folder);
+        Log.d(LOG_TAG, "Folder: " + folder);
+        Log.d(LOG_TAG,"Root Folder: " + folder);
         String finalPath = finalDirectory + File.separator + folder;
         File dirPath = new File(finalPath);
-        Log.i("INFO","Final Path: " + finalPath);
+        Log.d(LOG_TAG,"Final Path: " + finalPath);
         if (!dirPath.exists()) {
             boolean result = dirPath.mkdirs();
-            Log.d("DEBUG", "Resultado de la creacion de directorios: " + result);
+            Log.d(LOG_TAG, "Resultado de la creacion de directorios: " + result);
         }
         File finalFile = new File(finalPath + File.separator + fd.getName());
         if (!finalFile.exists()) {
             try {
-                Log.i("INFO","Final path not exist. Copying the file at: " + finalFile.getAbsolutePath());
+                Log.d(LOG_TAG,"Final path not exist. Copying the file at: " + finalFile.getAbsolutePath());
                 String origPath = fd.getAbsolutePath();
                 boolean renamed = fd.renameTo(finalFile);
                 boolean deleted = false;
                 boolean copied = false;
-                Log.i("INFO","Renamed attempt result successfully: " + renamed);
+                Log.d(LOG_TAG,"Renamed attempt result successfully: " + renamed);
                 if (!renamed) {
-                    Log.i("INFO","Trying to copy the file to: " + finalFile.getAbsolutePath());
+                    Log.d(LOG_TAG,"Trying to copy the file to: " + finalFile.getAbsolutePath());
                     Files.copy(fd, finalFile);
                     copied = finalFile.exists();
                     if (copied) {
 
                             deleted = fd.delete();
-                            Log.i("INFO","Copy finished: " + finalFile.getAbsolutePath());
+                            Log.d(LOG_TAG,"Copy finished: " + finalFile.getAbsolutePath());
 
                     }
 
                 }
 
-                Log.i("INFO", "Starting to audit the file organized");
-                Log.i("INFO","Audit the file organized completed");
+                Log.d(LOG_TAG, "Starting to audit the file organized");
+                Log.d(LOG_TAG,"Audit the file organized completed");
             } catch (IOException ex) {
                 Log.e("ERROR", "", ex);
             }
@@ -145,46 +146,46 @@ public class ExecutorService {
     }
 
     public void organizeFile(File fd) {
-        Log.i("INFO", "Starting organization for file: "+fd);
+        Log.d(LOG_TAG, "Starting organization for file: "+fd);
         if(fd != null) {
             for (Organizer org : getOrganizers()) {
-                Log.d("DEBUG", "Starting organization with organizer: "+org.getClass().getName());
+                Log.d(LOG_TAG, "Starting organization with organizer: "+org.getClass().getName());
                 if (org.apply(fd)) {
-                    Log.d("DEBUG","The file is allowed to use this organizer");
+                    Log.d(LOG_TAG,"The file is allowed to use this organizer");
                     String folder = org.generateFolder(fd.getName());
                     if(folder != null && !folder.isEmpty()) {
-                        Log.i("INFO", "Folder: " + folder);
+                        Log.d(LOG_TAG, "Folder: " + folder);
                         String finalPath = finalDirectory + File.separator + folder;
                         File dirPath = new File(finalPath);
-                        Log.i("INFO", "Final Path: " + finalPath);
+                        Log.d(LOG_TAG, "Final Path: " + finalPath);
                         if (!dirPath.exists()) {
                             boolean result = dirPath.mkdirs();
-                            Log.d("DEBUG", "Resultado de la creacion de directorios: " + result);
+                            Log.d(LOG_TAG, "Resultado de la creacion de directorios: " + result);
                         }
                         File finalFile = new File(finalPath + File.separator + fd.getName());
-                        Log.d("DEBUG", "Final file: " + finalFile.getAbsolutePath());
+                        Log.d(LOG_TAG, "Final file: " + finalFile.getAbsolutePath());
                         if (!finalFile.exists()) {
                             try {
-                                Log.i("INFO", "Final path not exist. Copying the file at: " + finalFile.getAbsolutePath());
+                                Log.d(LOG_TAG, "Final path not exist. Copying the file at: " + finalFile.getAbsolutePath());
                                 String origPath = fd.getAbsolutePath();
                                 boolean renamed = fd.renameTo(finalFile);
                                 boolean deleted = false;
                                 boolean copied = false;
-                                Log.i("INFO", "Renamed attempt result successfully: " + renamed);
+                                Log.d(LOG_TAG, "Renamed attempt result successfully: " + renamed);
                                 if (!renamed) {
-                                    Log.i("INFO", "Trying to copy the file to: " + finalFile.getAbsolutePath());
+                                    Log.d(LOG_TAG, "Trying to copy the file to: " + finalFile.getAbsolutePath());
                                     Files.copy(fd, finalFile);
                                     copied = finalFile.exists();
                                     if (copied) {
 
                                         deleted = fd.delete();
-                                        Log.i("INFO", "Copy finished: " + finalFile.getAbsolutePath());
+                                        Log.d(LOG_TAG, "Copy finished: " + finalFile.getAbsolutePath());
 
                                     }
 
                                 }
-                                Log.i("INFO", "Starting to audit the file organized");
-                                Log.i("INFO", "Audit the file organized completed");
+                                Log.d(LOG_TAG, "Starting to audit the file organized");
+                                Log.d(LOG_TAG, "Audit the file organized completed");
                             } catch (IOException ex) {
                                 Log.e("ERROR", "", ex);
                             }
@@ -197,7 +198,7 @@ public class ExecutorService {
                 }
             }
         }
-        Log.i("INFO", "Finished organization for file: "+fd);
+        Log.d(LOG_TAG, "Finished organization for file: "+fd);
     }
 
 

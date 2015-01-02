@@ -13,11 +13,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
-
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -38,6 +34,10 @@ public class SettingsActivity extends PreferenceActivity {
      * shown on tablets.
      */
     private static final boolean ALWAYS_SIMPLE_PREFS = false;
+
+
+    private static final String LOG_TAG = "SettingsActivity";
+
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -46,7 +46,7 @@ public class SettingsActivity extends PreferenceActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object value) {
             String stringValue = value.toString();
-            Log.d("DEBUG", "String value of the preference: " + stringValue);
+            Log.d(LOG_TAG, "String value of the preference: " + stringValue);
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
                 // the preference's 'entries' list.
@@ -58,7 +58,7 @@ public class SettingsActivity extends PreferenceActivity {
                                 ? listPreference.getEntries()[index]
                                 : null);
             } else {
-                Log.d("DEBUG", "Key value of the preference: " + preference.getKey());
+                Log.d(LOG_TAG, "Key value of the preference: " + preference.getKey());
                 preference.setSummary(stringValue);
             }
 
@@ -108,7 +108,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         Object value = extractValueFromPreference(preference.getKey(), PreferenceManager.getDefaultSharedPreferences(preference.getContext()));
         if (value != null) {
-            Log.d("DEBUG","Setting key-value {"+preference.getKey()+","+value+"}");
+            Log.d(LOG_TAG,"Setting key-value {"+preference.getKey()+","+value+"}");
             preference.setSummary(value.toString());
         }
     }
@@ -278,7 +278,7 @@ public class SettingsActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
 
 
-            Log.d("DEBUG", "[TVShowsPreferenceFragment] Binding preference summary.");
+            Log.d(LOG_TAG, "[TVShowsPreferenceFragment] Binding preference summary.");
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design

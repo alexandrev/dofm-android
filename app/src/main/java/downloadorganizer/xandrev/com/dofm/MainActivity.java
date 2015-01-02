@@ -1,7 +1,5 @@
 package downloadorganizer.xandrev.com.dofm;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ActionMenuView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +23,8 @@ public class MainActivity extends ActionBarActivity {
     private ConfigurationService configuration;
     private boolean isRunning;
     private Menu menu;
+
+    private static final String LOG_TAG = "MainActivity";
 
 
     public void manageBackgroundService(MenuItem serviceMenuItem){

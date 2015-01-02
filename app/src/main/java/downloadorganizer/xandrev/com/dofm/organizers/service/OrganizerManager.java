@@ -12,11 +12,10 @@ public class OrganizerManager {
 
     private static OrganizerManager instance;
     private List<Organizer> organizerList;
-    private Log logger;
-
     private static final String ORGANIZER_SEPARATOR = ",";
     private static final String PACKAGE_NAME = "downloadorganizer.xandrev.com.dofm.organizers.impl.";
     private static final Object LOCK = new Object();
+    private static final String LOG_TAG = "OrganizerManager";
 
     public static OrganizerManager getInstance(String configurationList) {
         synchronized (LOCK) {
@@ -41,7 +40,7 @@ public class OrganizerManager {
         
         Collections.sort(organizerList);
         for(Organizer org: organizerList){
-            logger.d("DEBUG","Organizer: "+org.getRootFolder() + " Priority: "+ org.getPriority());
+            Log.d(LOG_TAG,"Organizer: "+org.getRootFolder() + " Priority: "+ org.getPriority());
         }
         
 
@@ -57,7 +56,7 @@ public class OrganizerManager {
                 }
 
             } catch (Exception ex) {
-                logger.e("ERROR","Error detected",ex);
+                Log.e("ERROR","Error detected",ex);
             }
         }
         return null;

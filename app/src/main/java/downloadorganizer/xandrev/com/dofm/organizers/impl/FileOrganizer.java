@@ -4,9 +4,7 @@ import android.util.Log;
 
 import com.google.common.io.Files;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -24,6 +22,8 @@ public class FileOrganizer extends Organizer {
     private String name;
     private String type;
     private Collection<String> extensionList;
+
+    private static final String LOG_TAG = "FileOrganizer";
 
 
     public FileOrganizer() {
@@ -65,20 +65,20 @@ public class FileOrganizer extends Organizer {
     public String generateFolder(String fileName) {
         String finalFolder = null;
         HashMap<String,String> extensionsFolder = parseExtension();
-        Log.d("DEBUG","Starting to generate folder");
+        Log.d(LOG_TAG,"Starting to generate folder");
         if (fileName != null && !fileName.isEmpty()) {
-            Log.d("DEBUG","Starting to work with file:" + fileName);
+            Log.d(LOG_TAG,"Starting to work with file:" + fileName);
             String extension = Files.getFileExtension(fileName);
-            Log.d("DEBUG","Extracted extension from file: " + extension);
+            Log.d(LOG_TAG,"Extracted extension from file: " + extension);
             if (extension != null && !extension.isEmpty()) {
                 String folder = extensionsFolder.get(extension);
-                Log.d("DEBUG","Recovered folder from extension: " + folder);
+                Log.d(LOG_TAG,"Recovered folder from extension: " + folder);
                 if (folder != null && !folder.isEmpty()) {
                     finalFolder = getRootFolder() + File.separator + folder;
                 }
             }
         }
-        Log.d("DEBUG","Final path:" + finalFolder);
+        Log.d(LOG_TAG,"Final path:" + finalFolder);
         return finalFolder;
     }
 
@@ -112,30 +112,30 @@ public class FileOrganizer extends Organizer {
         if (extensionsStr != null && !extensionsStr.isEmpty()) {
             String[] extensionArray = extensionsStr.split(";");
             if (extensionArray != null) {
-                Log.d("DEBUG","Extension array length: " + extensionArray.length);
+                Log.d(LOG_TAG,"Extension array length: " + extensionArray.length);
                 for (String extension : extensionArray) {
                     String[] extParsed = extension.split("=");
                     if (extParsed != null && extParsed.length == 2) {
-                        Log.d("DEBUG","Extension parsed length: " + extParsed.length);
+                        Log.d(LOG_TAG,"Extension parsed length: " + extParsed.length);
                         String folder = extParsed[0];
                         String values = extParsed[1];
-                        Log.d("DEBUG","Folder: " + folder);
-                        Log.d("DEBUG","Value: " + values);
+                        Log.d(LOG_TAG,"Folder: " + folder);
+                        Log.d(LOG_TAG,"Value: " + values);
                         String[] valueArray = values.split(",");
                         if (valueArray != null && valueArray.length > 0) {
                             for (String val : valueArray) {
                                 if (!extensionsFolder.containsKey(val)) {
-                                    Log.d("DEBUG","Adding a new extension folder for extension: " + val);
+                                    Log.d(LOG_TAG,"Adding a new extension folder for extension: " + val);
                                     extensionsFolder.put(val, folder);
                                     extensionList.add(val);
-                                    Log.d("DEBUG","Added a new extension folder for extension");
+                                    Log.d(LOG_TAG,"Added a new extension folder for extension");
                                 }
                             }
                         }
                     }
                 }
             }
-            Log.d("DEBUG","Final parsed size: " + extensionsFolder.size());
+            Log.d(LOG_TAG,"Final parsed size: " + extensionsFolder.size());
         }
         return extensionsFolder;
     }

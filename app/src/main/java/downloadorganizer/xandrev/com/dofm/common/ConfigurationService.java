@@ -19,6 +19,7 @@ import java.util.Properties;
 public class ConfigurationService {
 
     private static ConfigurationService instance;
+    private static final String LOG_TAG = "ConfigurationService";
 
     private SharedPreferences prefs;
 
@@ -41,12 +42,12 @@ public class ConfigurationService {
     }
 
     public void reloadConfiguration(Context context){
-        Log.d("DEBUG", "Reloading configuration");
+        Log.d(LOG_TAG, "Reloading configuration");
         if(context != null) {
             prefs = PreferenceManager.getDefaultSharedPreferences(context);
             print();
         }
-        Log.d("DEBUG", "Configuration reloaded");
+        Log.d(LOG_TAG, "Configuration reloaded");
     }
 
     public String getProperty(String key){
@@ -63,7 +64,7 @@ public class ConfigurationService {
         return null;
     }
     public void print(){
-        Log.d("DEBUG", "Printing configuration values");
+        Log.d(LOG_TAG, "Printing configuration values");
         if(prefs != null){
             Map<String, String> names = (Map<String, String>) prefs.getAll();
             if(names != null){
@@ -71,7 +72,7 @@ public class ConfigurationService {
                 while(it.hasNext()){
                     Object name = (Object) it.next();
                     try {
-                        Log.d("DEBUG", name + " - " + names.get(name));
+                        Log.d(LOG_TAG, name + " - " + names.get(name));
                     }catch(ClassCastException ex){
 
                     }
@@ -79,7 +80,7 @@ public class ConfigurationService {
 
             }
         }
-        Log.d("DEBUG", "Printed configuration values");
+        Log.d(LOG_TAG, "Printed configuration values");
 
     }
 

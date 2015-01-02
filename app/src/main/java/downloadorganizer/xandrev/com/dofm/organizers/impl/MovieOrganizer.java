@@ -2,11 +2,7 @@ package downloadorganizer.xandrev.com.dofm.organizers.impl;
 
 
 import android.util.Log;
-
-import com.google.common.io.Files;
-
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,7 +20,7 @@ public class MovieOrganizer extends Organizer {
     private ConfigurationService config;
     private String name;
       private String type;
-
+    private static final String LOG_TAG = "MovieOrganizer";
 
 
 
@@ -148,12 +144,12 @@ public class MovieOrganizer extends Organizer {
 
     private void parseExtension(String extensionsStr,Collection<String> extensionList) {
         if(extensionsStr != null && !extensionsStr.isEmpty()){
-            Log.d("DEBUG", "Extension string value: "+extensionsStr);
+            Log.d(LOG_TAG, "Extension string value: "+extensionsStr);
             String[] extList = extensionsStr.split(",");
             if(extList != null){
                 extensionList.addAll(Arrays.asList(extList));
             }
-            Log.d("DEBUG", "Extension list size: "+extensionList.size());
+            Log.d(LOG_TAG, "Extension list size: "+extensionList.size());
         }
     }
 

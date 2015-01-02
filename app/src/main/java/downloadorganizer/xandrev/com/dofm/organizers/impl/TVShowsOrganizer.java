@@ -24,6 +24,7 @@ public class TVShowsOrganizer extends Organizer {
     private String name;
     private String type;
     private final ConfigurationService config = ConfigurationService.getInstance(null);
+    private static final String LOG_TAG = "TVShowsOrganizer";
 
     public TVShowsOrganizer() {
         name = TVShowsOrganizerConstants.NAME_ORGANIZER;
@@ -76,24 +77,24 @@ public class TVShowsOrganizer extends Organizer {
     public String generateFolder(String fileName) {
         String pattern = getPattern();
         Pattern p = Pattern.compile(pattern);
-        Log.d("DEBUG","Pattern: "+pattern);
+        Log.d(LOG_TAG,"Pattern: "+pattern);
         Matcher m = p.matcher(fileName);
-        boolean prueba = m.matches();
-        Log.d("DEBUG", "Filename : " + fileName + " matches: " + prueba);
-        if (prueba) {
+        boolean matching = m.matches();
+        Log.d(LOG_TAG, "Filename : " + fileName + " matches: " + matching);
+        if (matching) {
             
-            String serie = m.group(1);
-            serie = serie.replaceAll("\\.", " ");
-            Log.d("DEBUG", "TV Show extracted: " + serie);
-            if (serie != null) {
-                serie = serie.trim();
+            String shows = m.group(1);
+            shows = shows.replaceAll("\\.", " ");
+            Log.d(LOG_TAG, "TV Show extracted: " + shows);
+            if (shows != null) {
+                shows = shows.trim();
             }
 
             String rootFolder = getRootFolder();
 
 
             if (!getFolderSeason()) {
-                return rootFolder + File.separator + serie;
+                return rootFolder + File.separator + shows;
             } else {
                 String season = m.group(3);
                 if (season == null || season.isEmpty()) {
@@ -104,17 +105,17 @@ public class TVShowsOrganizer extends Organizer {
                 try {
                     seasonInt = Integer.parseInt(season);
                 } catch (NumberFormatException ex) {
-                    Log.w("WARN","",ex);
+                    Log.w(LOG_TAG,"",ex);
                 }
                 if (seasonInt > 0) {
-                    return rootFolder + File.separator + serie + File.separator + "Season " + seasonInt;
+                    return rootFolder + File.separator + shows + File.separator + "Season " + seasonInt;
                 } else {
-                    return rootFolder + File.separator + serie + File.separator + "Unknown Season ";
+                    return rootFolder + File.separator + shows + File.separator + "Unknown Season ";
                 }
 
             }
         }
-        Log.d("DEBUG", "No TV Show extracted");
+        Log.d(LOG_TAG, "No TV Show extracted");
         return null;
     }
 
@@ -171,12 +172,12 @@ public class TVShowsOrganizer extends Organizer {
     private void parseExtension(String extensionsStr,Collection<String> extensionList) {
 
         if(extensionsStr != null && !extensionsStr.isEmpty()){
-            Log.d("DEBUG", "Extension string value: "+extensionsStr);
+            Log.d(LOG_TAG, "Extension string value: "+extensionsStr);
             String[] extList = extensionsStr.split(",");
             if(extList != null){
                 extensionList.addAll(Arrays.asList(extList));
             }
-            Log.d("DEBUG", "Extension list size: "+extensionList.size());
+            Log.d(LOG_TAG, "Extension list size: "+extensionList.size());
         }
     }
 
