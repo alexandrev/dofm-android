@@ -3,7 +3,7 @@
         android:title="Root Folder"
         android:key="tvshows.root_folder"
         android:summary="Category folder name which will contain all the items grouped by this category"
-        android:defaultValue="Series"
+        android:defaultValue="Shows"
         />
     <EditTextPreference
         android:title="Filtering Pattern"

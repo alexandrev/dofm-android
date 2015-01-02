@@ -4,7 +4,7 @@
         android:title="Root Folder"
         android:key="files.root_folder"
         android:summary="Category folder name which will contain all the items grouped by this category"
-        android:defaultValue="Otros"
+        android:defaultValue="Others"
         />
     <EditTextPreference
         android:title="Priority"
@@ -17,6 +17,7 @@
         android:title="Extensions"
         android:key="files.extensions"
         android:summary="File extensions allowed to run inside the organizer"
+        android:defaultValue="Books=epub,pdf;Documents=doc,docx,xls,xlsx,ppt,pptx,txt;Software=exe,msi;Archives=zip,rar,7z,gz"
         />
 
 

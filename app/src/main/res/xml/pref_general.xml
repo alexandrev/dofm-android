@@ -4,14 +4,14 @@
         android:title="Initial Folder"
         android:key="general.initial_folder"
         android:summary="Initial folder which will be watched by the application"
-        android:defaultValue="/storage/sdcard0/Download"
+        android:defaultValue="/storage/external_storage/sda1/Videos"
         />
     <!-- android:defaultValue="/storage/sdcard0/Download" -->
     <EditTextPreference
         android:title="Final Folder"
         android:key="general.final_folder"
         android:summary="Root folder under we get all our categorized items"
-        android:defaultValue="/storage/sdcard0/"
+        android:defaultValue="/storage/external_storage/sda1/"
         />
         <!-- android:defaultValue="/storage/sdcard0/" -->
 
