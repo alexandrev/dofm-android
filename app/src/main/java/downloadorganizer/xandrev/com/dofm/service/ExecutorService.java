@@ -32,8 +32,6 @@ public class ExecutorService {
     private final ConfigurationService cfg;
     private final OrganizerManager manager;
     private final List<Organizer> organizerList;
-    private String finalDirectory;
-    private String initialDirectory;
     private boolean isRunning = false;
 
     public static ExecutorService getInstance() {
@@ -55,18 +53,21 @@ public class ExecutorService {
         }
         manager = OrganizerManager.getInstance(organizerListString);
         organizerList = manager.getOrganizerList();
-        reloadConfiguration();
 
     }
 
-    private void reloadConfiguration() {
-        finalDirectory = cfg.getProperty(Constants.FINAL_FOLDER);
-        initialDirectory = cfg.getProperty(Constants.INITIAL_FOLDER);
+    public String getFinalFolder(){
+        return cfg.getProperty(Constants.FINAL_FOLDER);
     }
+
+    public String getOriginalFolder(){
+        return cfg.getProperty(Constants.INITIAL_FOLDER);
+    }
+
+
 
     public void applyExistentFiles() {
-        reloadConfiguration();
-        applyExistentFiles(initialDirectory);
+        applyExistentFiles(getOriginalFolder());
         executionTime = new Date();
     }
 
@@ -107,7 +108,7 @@ public class ExecutorService {
     public void organizeFile(File fd, String folder) {
         Log.d(LOG_TAG, "Folder: " + folder);
         Log.d(LOG_TAG,"Root Folder: " + folder);
-        String finalPath = finalDirectory + File.separator + folder;
+        String finalPath = getFinalFolder() + File.separator + folder;
         File dirPath = new File(finalPath);
         Log.d(LOG_TAG,"Final Path: " + finalPath);
         if (!dirPath.exists()) {
@@ -155,7 +156,7 @@ public class ExecutorService {
                     String folder = org.generateFolder(fd.getName());
                     if(folder != null && !folder.isEmpty()) {
                         Log.d(LOG_TAG, "Folder: " + folder);
-                        String finalPath = finalDirectory + File.separator + folder;
+                        String finalPath = getFinalFolder() + File.separator + folder;
                         File dirPath = new File(finalPath);
                         Log.d(LOG_TAG, "Final Path: " + finalPath);
                         if (!dirPath.exists()) {
