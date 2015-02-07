@@ -3,7 +3,7 @@
         android:title="Root Folder"
         android:key="movies.root_folder"
         android:summary="Category folder name which will contain all the items grouped by this category"
-        android:defaultValue="Movies"
+        android:defaultValue="Peliculas"
         />
     <EditTextPreference
         android:title="Priority"

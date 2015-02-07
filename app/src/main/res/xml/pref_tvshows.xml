@@ -3,13 +3,13 @@
         android:title="Root Folder"
         android:key="tvshows.root_folder"
         android:summary="Category folder name which will contain all the items grouped by this category"
-        android:defaultValue="Shows"
+        android:defaultValue="Series"
         />
     <EditTextPreference
         android:title="Filtering Pattern"
         android:key="tvshows.pattern"
         android:summary="Pattern that helps to categorize the items inside the category"
-        android:defaultValue="(.*)\\s*[\\.\\-]\\s*([sS]([0-9]?[0-9])[eE]?([0-9]?[0-9])|([0-9]?[0-9])x([0-9]?[0-9])|([0-9]?[0-9])of([0-9]?[0-9])|[0-9]{3,4}\\.).*"
+        android:defaultValue="(.*)\\s*[\\.\\-]\\s*([sS]([0-9]?[0-9])[eE]?([0-9]?[0-9])\\.|([0-9]?[0-9])x([0-9]?[0-9])|([0-9]?[0-9])([0-9][0-9])\\.|([0-9]?[0-9])of([0-9]?[0-9]\\.)|[0-9]{3,4}\\.).*"
         />
     <EditTextPreference
         android:title="Priority"

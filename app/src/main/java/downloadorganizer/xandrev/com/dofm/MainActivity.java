@@ -1,16 +1,25 @@
 package downloadorganizer.xandrev.com.dofm;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
 
 import downloadorganizer.xandrev.com.dofm.common.ConfigurationService;
 import downloadorganizer.xandrev.com.dofm.service.ExecutorService;
@@ -23,8 +32,11 @@ public class MainActivity extends ActionBarActivity {
     private ConfigurationService configuration;
     private boolean isRunning;
     private Menu menu;
+    private ListView organizedItems;
 
     private static final String LOG_TAG = "MainActivity";
+    private BroadcastReceiver receiver;
+    private ArrayList<String> list;
 
 
     public void manageBackgroundService(MenuItem serviceMenuItem){
@@ -60,22 +72,61 @@ public class MainActivity extends ActionBarActivity {
 
     public void launchOrganizer(final View view){
 
-        service.applyExistentFiles();
+        ArrayList<File> files = service.applyExistentFiles();
         Toast.makeText(this, R.string.toast_completed, Toast.LENGTH_LONG).show();
         TextView tv1 = (TextView)findViewById(R.id.textView3);
         tv1.setText(service.getTime().toString());
+        if(files != null){
+            list = new ArrayList<String>();
+            for (int i = 0; i < files.size(); ++i) {
+                if(files.get(i) != null) {
+                    list.add(files.get(i).getAbsolutePath());
+                }
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
+            if(this.organizedItems != null) {
+                this.organizedItems.setAdapter(adapter);
+            }
+        }
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
+        this.organizedItems = (ListView) findViewById(R.id.listView);
         configuration.reloadConfiguration(getApplicationContext());
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+       unregisterReceiver(receiver);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        IntentFilter filter = new IntentFilter();
+        list = new ArrayList<String>();
+        filter.addAction("downloadorganizer.xandrev.com.dofm.Message");
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+            String s = intent.getStringExtra("data");
+                Log.d(LOG_TAG, "Received a new message: "+s);
+                if(organizedItems != null) {
+                    Log.d(LOG_TAG, "Recovering array adapter");
+                    list.add(s);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, list);
+                    organizedItems.setAdapter(adapter);
+                    Log.d(LOG_TAG, "Adding new item to the array adapter");
+                }
+            }
+        };
+        registerReceiver(receiver,filter);
         configuration = ConfigurationService.getInstance(getApplicationContext());
         configuration.reloadConfiguration(getApplicationContext());
         service = ExecutorService.getInstance();

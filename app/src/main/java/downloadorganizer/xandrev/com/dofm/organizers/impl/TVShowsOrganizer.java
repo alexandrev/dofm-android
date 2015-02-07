@@ -1,5 +1,6 @@
 package downloadorganizer.xandrev.com.dofm.organizers.impl;
 
+import android.text.method.TextKeyListener;
 import android.util.Log;
 
 import com.google.common.io.Files;
@@ -85,6 +86,7 @@ public class TVShowsOrganizer extends Organizer {
             
             String shows = m.group(1);
             shows = shows.replaceAll("\\.", " ");
+            shows = capitalize(shows);
             Log.d(LOG_TAG, "TV Show extracted: " + shows);
             if (shows != null) {
                 shows = shows.trim();
@@ -117,6 +119,23 @@ public class TVShowsOrganizer extends Organizer {
         }
         Log.d(LOG_TAG, "No TV Show extracted");
         return null;
+    }
+
+    private String capitalize(String shows) {
+        String out = shows;
+        if(shows != null){
+            out = "";
+            String lowerShow = shows.toLowerCase();
+            String[] words = lowerShow.split(" ");
+            for(String word : words){
+                String capWord = word.toUpperCase().charAt(0) + word.toLowerCase().substring(1);
+                if(out  != ""){
+                    out += " ";
+                }
+                out += capWord;
+            }
+        }
+        return out;
     }
 
     public int getPriority() {
