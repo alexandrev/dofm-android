@@ -112,7 +112,7 @@ public class TVShowsOrganizer extends Organizer {
                 if (seasonInt > 0) {
                     return rootFolder + File.separator + shows + File.separator + "Season " + seasonInt;
                 } else {
-                    return rootFolder + File.separator + shows + File.separator + "Unknown Season ";
+                    return rootFolder + File.separator + shows + File.separator + "Unknown Season";
                 }
 
             }
