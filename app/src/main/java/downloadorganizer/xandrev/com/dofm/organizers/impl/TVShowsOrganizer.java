@@ -98,11 +98,10 @@ public class TVShowsOrganizer extends Organizer {
             if (!getFolderSeason()) {
                 return rootFolder + File.separator + shows;
             } else {
-                String season = m.group(3);
-                if (season == null || season.isEmpty()) {
-                    season = m.group(5);
+                String season = "";
+                for (int i = 3; (season == null || season.isEmpty()) && i < m.groupCount(); i += 2) {
+                    season = m.group(i);
                 }
-
                 int seasonInt = -1;
                 try {
                     seasonInt = Integer.parseInt(season);
@@ -111,7 +110,9 @@ public class TVShowsOrganizer extends Organizer {
                 }
                 if (seasonInt > 0) {
                     return rootFolder + File.separator + shows + File.separator + "Season " + seasonInt;
-                } else {
+                } else if (season != null && season.length() < 10) {
+                    return rootFolder + File.separator + shows + File.separator + "Season " + season;
+                }else{
                     return rootFolder + File.separator + shows + File.separator + "Unknown Season";
                 }
 

@@ -9,7 +9,7 @@
         android:title="Filtering Pattern"
         android:key="tvshows.pattern"
         android:summary="Pattern that helps to categorize the items inside the category"
-        android:defaultValue="(.*)\\s*[\\.\\-]\\s*([sS]([0-9]?[0-9])[eE]?([0-9]?[0-9])\\.|([0-9]?[0-9])x([0-9]?[0-9])|([0-9]?[0-9])([0-9][0-9])\\.|([0-9]?[0-9])of([0-9]?[0-9]\\.)|[0-9]{3,4}\\.).*"
+        android:defaultValue="(.*)\\s*[\\.\\-]\\s*([sS]([0-9]?[0-9])[eE]?([0-9]?[0-9])\\.|([0-9]?[0-9])x([0-9]?[0-9])|([0-9]?[0-9])of([0-9]?[0-9]\\.)|([0-9]{4}\\.[0-9]{2})\\.([0-9]{2})\\.|([0-9]?[0-9])([0-9][0-9])\\.).*"
         />
     <EditTextPreference
         android:title="Priority"
